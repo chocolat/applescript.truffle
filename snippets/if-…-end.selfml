@@ -1,0 +1,10 @@
+(name [if … end])
+
+(trigger
+    (tab if))
+
+(only-in source.applescript)
+
+(snippet [if %{1="condition"} then
+	%{0="-- statements"}
+end if])

@@ -1,0 +1,8 @@
+(name [set … to …])
+
+(trigger
+    (tab set))
+
+(only-in source.applescript)
+
+(snippet [set %{1="var_name"} to %{0="value"}])

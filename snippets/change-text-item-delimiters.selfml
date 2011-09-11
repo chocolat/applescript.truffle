@@ -1,0 +1,11 @@
+(name [change text item delimiters])
+
+(trigger
+    (tab delim))
+
+(only-in source.applescript)
+
+(snippet [set oldDelims to AppleScript's text item delimiters
+set AppleScript's text item delimiters to {"%{1=","}"}
+%{0="-- statements"}
+set AppleScript's text item delimiters to oldDelims])

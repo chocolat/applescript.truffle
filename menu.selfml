@@ -1,0 +1,9 @@
+(menu command.compile-in-script-editor
+    ---
+    (submenu Conversion command.copy-url-encoded-script command.toggle-applescript-osascript command.toggle-string-unicode-text)
+    (submenu Documentation command.documentation-for-application --- command.applescript-help command.applescript-language-guide command.applescript-terminology-event-codes --- command.applescript-reference-library command.applescript-release-notes --- command.applescript-resources command.mac-os-x-automation-resources)
+    (submenu Blocks command.new-function command.end-block --- snippet.script-…-end --- [snippet.tell-[app]-…-end] [snippet.using-terms-from-[app]-…-end] --- [snippet.repeat-[times]-…-end] snippet.repeat-while-___-end snippet.repeat-until-___-end snippet.repeat-with-___-from-___-end snippet.repeat-with-___-in-___-end --- snippet.if-…-end snippet.try-…-on-error-…-end snippet.with-timeout-…-end snippet.with-transaction-…-end --- snippet.considering-…-end snippet.ignoring-…-end snippet.change-text-item-delimiters)
+    (submenu Statements snippet.prop-parent-… snippet.prop-… snippet.set-…-to-… snippet.copy-…-to-… snippet.duplicate-…-to-… snippet.if-…-then-… snippet.do-shell-script-…)
+    (submenu Dialogs snippet.ok snippet.ok-cancel snippet.ok-cancel-other --- snippet.alert snippet.text-field snippet.choose-item-from-list --- snippet.choose-new-file [snippet.choose-application(s)] [snippet.choose-file(s)] [snippet.choose-folder(s)] snippet.choose-url snippet.choose-color)
+    (submenu Idioms snippet.split-join-helper-functions snippet.select-menu-item-with-ui-scripting snippet.check-that-ui-scripting-is-enabled)
+    [snippet.#!-usr-bin-osascript])

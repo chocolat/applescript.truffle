@@ -1,0 +1,20 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [Mac OS X Automation Resources])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# A list of useful AppleScript Resources at
+# macosxautomation.com
+
+# open "http://www.macosxautomation.com/applescript/"
+])

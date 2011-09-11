@@ -1,0 +1,41 @@
+(trigger
+    (key [[ctrl][shift]"]))
+
+(name [Toggle String / «data utf8»])
+
+(only-in [string.quoted.double.applescript, constant.other.data.utxt.applescript])
+
+(input selection scope)
+
+(output replace-selected)
+
+(save nothing)
+
+(script [#!/usr/bin/env ruby
+
+# AppleScript strings cannot handle Unicode text, so
+# any Unicode characters entered in a string will
+# simply be dropped when the script is run.  However,
+# a Unicode text object obviously has no trouble
+# accepting any characters.  This command toggles
+# between raw unicode data and a " delimited string,
+# to simplify the creation of Unicode text objects.
+
+case txt = STDIN.read
+  when /\A«data utxt([0-9A-F]+)»(?: as Unicode text)?\z/i then
+    decoded = $1.gsub(/([0-9A-F]{4})/i) { |m| [$1.hex].pack("U") }
+    print '"' + decoded + '"'
+
+  when /\A«data utf8([0-9A-F]+)»(?: as Unicode text)?\z/i then
+    decoded = $1.gsub(/../) { |i| i.hex.chr }
+    print '"' + decoded + '"'
+
+  when /\A"(.*)"\z/ then
+    encoded = ""
+    $1.each_byte { |b| encoded << format("%02X", b) }
+    print '«data utf8' + encoded + '» as Unicode text'
+
+  else
+    print txt
+end
+])

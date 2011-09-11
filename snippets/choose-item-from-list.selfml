@@ -1,0 +1,9 @@
+(name [Choose Item from List])
+
+(trigger
+    (tab choose))
+
+(only-in source.applescript)
+
+(snippet [set the_choice to choose from list %{1="{"%{2="choices"}"\"}}
+%{0} ])

@@ -1,0 +1,10 @@
+(name [repeat while ... end])
+
+(trigger
+    (tab rep))
+
+(only-in source.applescript)
+
+(snippet [repeat while %{1="condition"}
+	%{0="-- statements"}
+end repeat])

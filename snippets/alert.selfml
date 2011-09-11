@@ -1,0 +1,10 @@
+(name Alert)
+
+(trigger
+    (tab alert))
+
+(only-in source.applescript)
+
+(snippet [display alert "%{1="alert text"}" 
+	%{2="message "%{3="message text"}" 
+	"}%{4="as warning"}])

@@ -1,0 +1,10 @@
+(name [repeat with ... in ... end])
+
+(trigger
+    (tab rep))
+
+(only-in source.applescript)
+
+(snippet [repeat with %{1="item"} in %{2="list"}
+	%{0="-- statements"}
+end repeat])

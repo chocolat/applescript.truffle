@@ -1,0 +1,11 @@
+(name [do shell script …])
+
+(trigger
+    (tab shell))
+
+(only-in source.applescript)
+
+(snippet [%{1/.+/set /}%{1="shell_output"}%{1/.+/ to /}do shell script%{2/.+/ ¬
+	/}%{2=""%{3="script"}""}%{4/.+/ ¬
+	/}%{4="without altering line endings"}
+])

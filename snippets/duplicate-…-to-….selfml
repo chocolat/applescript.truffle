@@ -1,0 +1,8 @@
+(name [duplicate … to …])
+
+(trigger
+    (tab dup))
+
+(only-in source.applescript)
+
+(snippet [duplicate %{1="value"} to %{0="location"}])

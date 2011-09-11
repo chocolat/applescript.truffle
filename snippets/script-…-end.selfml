@@ -1,0 +1,12 @@
+(name [script … end])
+
+(trigger
+    (tab script))
+
+(only-in source.applescript)
+
+(snippet [script %{1="script_object"}
+	on run
+		%{0="-- statements"}
+	end run
+end script])

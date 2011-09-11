@@ -1,0 +1,30 @@
+(trigger
+    (key [[shift][enter]])
+    (tab on))
+
+(name [New Function])
+
+(only-in source.applescript)
+
+(input selection word)
+
+(output snippet)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# Turn the selected text into a function with
+# positional arguments.
+
+NAME="$(cat)"
+if [[ -z "$NAME" ]]; then
+	NAME='${1:function_name}'
+fi
+
+cat <<SNIPPET
+on $NAME(\${2:arguments})
+	\${0:-- statements}
+end $NAME
+SNIPPET
+])

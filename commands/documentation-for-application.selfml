@@ -1,0 +1,24 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [Documentation for Application])
+
+(only-in string.quoted.double.application-name.applescript)
+
+(input selection scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+read appname
+osascript <<-APPLESCRIPT
+	tell app "Script Editor"
+	    launch
+	    activate
+	    open path to application ${appname}
+	end tell
+APPLESCRIPT
+])

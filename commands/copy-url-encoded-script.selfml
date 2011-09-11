@@ -1,0 +1,22 @@
+(trigger
+    (key [[ctrl][shift][cmd]C]))
+
+(name [Copy URL Encoded Script])
+
+(only-in source.applescript)
+
+(input selection document)
+
+(output tooltip)
+
+(save nothing)
+
+(script [#!/usr/bin/env ruby -KA -ruri
+
+src = 'applescript://com.apple.scripteditor?action=new&script='
+src << URI.encode(STDIN.read)
+
+open('|pbcopy', 'w') { |io| io << src }
+
+print "The URL encoded AppleScript was copied to the clipboard"
+])

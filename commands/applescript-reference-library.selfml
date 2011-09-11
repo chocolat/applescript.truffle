@@ -1,0 +1,19 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [AppleScript Reference Library])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# The AppleScript Reference Library at the Apple Developer Connection.
+
+open "https://developer.apple.com/referencelibrary/ScriptingAutomation/idxAppleScript-date.html"
+])

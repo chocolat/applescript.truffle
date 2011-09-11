@@ -1,0 +1,29 @@
+(trigger
+    (key [[ctrl][shift]H]))
+
+(name [Toggle AppleScript / osascript])
+
+(only-in [source.applescript, source.shell])
+
+(input selection line)
+
+(output replace-selected)
+
+(save nothing)
+
+(script `#!/usr/bin/env ruby
+
+scrpt = STDIN.read
+
+if scrpt =~ /\A\s*osascript\s+-e\s*(.*)\z/m then
+  scrpt = $1.gsub(/\s+-e\s*/, "\n")
+  scrpt.gsub!(/\\(')|'([^']*)'/, '\1\2')
+  print "${0:", scrpt.gsub(/[$``\\}]/, '\\\\\0'), "}"
+  %x{ { sleep .1; osascript -e 'tell app "System Events" to keystroke "[" using {command down, option down}'; } &>/dev/null & } # Indent Selection
+  exit 204 # this signals exit_insert_as_snippet
+else
+  lines = scrpt.collect { |line| line.chomp.gsub(/'/, "'\\\\''") }
+  lines.collect! { |line| "-e '#{line.strip}'" }
+  print "osascript " + lines.join(' ')
+end
+`)

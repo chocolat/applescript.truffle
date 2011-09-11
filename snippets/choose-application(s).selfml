@@ -1,0 +1,10 @@
+(name [Choose Application(s)])
+
+(trigger
+    (tab choose))
+
+(only-in source.applescript)
+
+(snippet [%{1/.+/set /}%{1="the_application"}%{1/.+/ to /}choose application with prompt "%{2="Choose an Application"}"%{3/.+/ ¬
+	/}%{3="with multiple selections allowed"}
+])

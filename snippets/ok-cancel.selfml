@@ -1,0 +1,18 @@
+(name OK/Cancel)
+
+(trigger
+    (tab dialog))
+
+(only-in source.applescript)
+
+(snippet [display dialog %{1=""%{2="text"}""}%{3/.+/ ¬
+	with icon /}%{3="1"} 
+	buttons {"%{5="Cancel"}", "%{4="OK"}"} 
+	default button "%{4}"
+set button_pressed to button returned of result
+if button_pressed is "%{4}" then
+	%{6="-- statements for default button"}%{7/.+/
+else
+	/}%{7="-- statements for cancel button"}
+end if
+])

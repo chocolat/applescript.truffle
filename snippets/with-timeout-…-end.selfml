@@ -1,0 +1,10 @@
+(name [with timeout … end])
+
+(trigger
+    (tab timeout))
+
+(only-in source.applescript)
+
+(snippet [with timeout %{1="number"} seconds
+	%{0="-- statements"}
+end timeout])

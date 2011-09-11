@@ -1,0 +1,8 @@
+(name [copy … to …])
+
+(trigger
+    (tab copy))
+
+(only-in source.applescript)
+
+(snippet [copy %{1="value"} to %{0="location"}])

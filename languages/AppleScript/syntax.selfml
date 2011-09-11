@@ -1,0 +1,805 @@
+(root source.applescript
+    (include @blocks)
+    (include @inline))
+
+(collection built-in.support
+    (zone support.function.built-in.property.applescript
+        (match
+            (regex [\b(?i:POSIX\s+path|frontmost|id|name|running|version|days?|weekdays?|months?|years?|time|date\s+string|time\s+string|length|rest|reverse|items?|contents|quoted\s+form|characters?|paragraphs?|words?)\b])))
+    (zone support.function.built-in.command.applescript
+        (match
+            (regex [\b(?i:activate|log|clipboard\s+info|set\s+the\s+clipboard\s+to|the\s+clipboard|info\s+for|list\s+(disks|folder)|mount\s+volume|path\s+to(\s+resource)?|close\s+access|get\s+eof|open\s+for\s+access|read|set\s+eof|write|open\s+location|current\s+date|do\s+shell\s+script|get\s+volume\s+settings|random\s+number|round|set\s+volume|system\s+(attribute|info)|time\s+to\s+GMT|load\s+script|run\s+script|scripting\s+components|store\s+script|copy|count|get|launch|run|set|ASCII\s+(character|number)|localized\s+string|offset|summarize|beep|choose\s+(application|color|file(\s+name)?|folder|from\s+list|remote\s+application|URL)|delay|display\s+(alert|dialog)|say)\b])))
+    (zone support.function.built-in.applescript
+        (match
+            (regex [\b(?i:get|run)\b])))
+    (zone support.class.built-in.applescript
+        (match
+            (regex [\b(?i:anything|data|text|upper\s+case|propert(y|ies))\b])))
+    (zone support.class.built-in.applescript
+        (match
+            (regex [\b(?i:alias|class)(es)?\b])))
+    (zone support.class.built-in.applescript
+        (match
+            (regex [\b(?i:app(lication)?|boolean|character|constant|date|event|file(\s+specification)?|handler|integer|item|keystroke|linked\s+list|list|machine|number|picture|preposition|POSIX\s+file|real|record|reference(\s+form)?|RGB\s+color|script|sound|text\s+item|type\s+class|vector|writing\s+code(\s+info)?|zone|((international|styled(\s+(Clipboard|Unicode))?|Unicode)\s+)?text|((C|encoded|Pascal)\s+)?string)s?\b])))
+    (zone support.class.built-in.unit.applescript
+        (match
+            (regex [(?ix)\b
+						(	(cubic\s+(centi)?|square\s+(kilo)?|centi|kilo)met(er|re)s
+						|	square\s+(yards|feet|miles)|cubic\s+(yards|feet|inches)|miles|inches
+						|	lit(re|er)s|gallons|quarts
+						|	(kilo)?grams|ounces|pounds
+						|	degrees\s+(Celsius|Fahrenheit|Kelvin)
+						)
+					\b])))
+    (zone support.class.built-in.time.applescript
+        (match
+            (regex [\b(?i:seconds|minutes|hours|days)\b]))))
+
+(collection comments.nested
+    (zone comment.block.applescript
+        (start
+            (regex [\(\*]
+                (0 punctuation.definition.comment.applescript)))
+        (end
+            (regex [\*\)]
+                (0 punctuation.definition.comment.applescript)))
+        (subzones
+            (include @comments.nested))))
+
+(collection built-in.punctuation
+    (zone punctuation.separator.continuation.line.applescript
+        (match ¬))
+    (zone punctuation.separator.key-value.property.applescript
+        (match :))
+    (zone punctuation.section.group.applescript
+        (match
+            (regex [[()]]))))
+
+(collection built-in.constant
+    (zone constant.language.boolean.applescript
+        (match
+            (regex [\b(?i:true|false|yes|no)\b])))
+    (zone constant.language.null.applescript
+        (match
+            (regex [\b(?i:null|missing\s+value)\b])))
+    (zone constant.numeric.applescript
+        (match
+            (regex [-?\b\d+((\.(\d+\b)?)?(?i:e\+?\d*\b)?|\b)])))
+    (zone constant.other.text.applescript
+        (match
+            (regex [\b(?i:space|tab|return|linefeed|quote)\b])))
+    (zone constant.other.styles.applescript
+        (match
+            (regex [\b(?i:all\s+(caps|lowercase)|bold|condensed|expanded|hidden|italic|outline|plain|shadow|small\s+caps|strikethrough|(sub|super)script|underline)\b])))
+    (zone constant.other.time.month.applescript
+        (match
+            (regex [\b(?i:Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sep(tember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)\b])))
+    (zone constant.other.time.weekday.applescript
+        (match
+            (regex [\b(?i:Mon(day)?|Tue(sday)?|Wed(nesday)?|Thu(rsday)?|Fri(day)?|Sat(urday)?|Sun(day)?)\b])))
+    (zone constant.other.miscellaneous.applescript
+        (match
+            (regex [\b(?i:AppleScript|pi|result|version|current\s+application|its?|m[ey])\b])))
+    (zone variable.language.applescript
+        (match
+            (regex [\b(?i:text\s+item\s+delimiters|print\s+(length|depth))\b]))))
+
+(collection built-in
+    (include @built-in.constant)
+    (include @built-in.keyword)
+    (include @built-in.support)
+    (include @built-in.punctuation))
+
+(collection blocks.repeat
+    (zone meta.block.repeat.until.applescript
+        (start
+            (regex [^\s*(repeat)\s+(until)\b]
+                (1 keyword.control.repeat.applescript)
+                (2 keyword.control.until.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+repeat)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.repeat.while.applescript
+        (start
+            (regex [^\s*(repeat)\s+(while)\b]
+                (1 keyword.control.repeat.applescript)
+                (2 keyword.control.while.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+repeat)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.repeat.with.applescript
+        (start
+            (regex [^\s*(repeat)\s+(with)\s+(\w+)\b]
+                (3 variable.parameter.loop.applescript)
+                (1 keyword.control.repeat.applescript)
+                (2 keyword.control.until.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+repeat)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (zone keyword.control.modifier.range.applescript
+                (match
+                    (list from to by)
+                    (boundary.both)))
+            (zone keyword.control.modifier.list.applescript
+                (match
+                    (list in)
+                    (boundary.both)))
+            (include $self)))
+    (zone meta.block.repeat.forever.applescript
+        (start
+            (regex [^\s*(repeat)\b(?=\s*(--.*?)?$)]
+                (1 keyword.control.repeat.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+repeat)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.repeat.times.applescript
+        (start
+            (regex [^\s*(repeat)\b]
+                (1 keyword.control.repeat.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+repeat)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (zone keyword.control.times.applescript
+                (match
+                    (list times)
+                    (boundary.both)))
+            (include $self))))
+
+(collection finder
+    (zone support.class.finder.items.applescript
+        (match
+            (regex [\b(item|container|(computer|disk|trash)-object|disk|folder|((alias|application|document|internet location) )?file|clipping|package)s?\b])))
+    (zone support.class.finder.window-classes.applescript
+        (match
+            (regex [\b((Finder|desktop|information|preferences|clipping) )windows?\b])))
+    (zone support.class.finder.type-definitions.applescript
+        (match
+            (regex [\b(preferences|(icon|column|list) view options|(label|column|alias list)s?)\b])))
+    (zone support.function.finder.items.applescript
+        (match
+            (regex [\b(copy|find|sort|clean up|eject|empty( trash)|erase|reveal|update)\b])))
+    (zone support.constant.finder.applescript
+        (match
+            (list [insertion location] [product version] [startup disk] desktop trash home [computer container] [finder preferences])
+            (boundary.both)))
+    (zone support.variable.finder.applescript
+        (match
+            (list visible)
+            (boundary.both))))
+
+(collection standard-suite
+    (zone support.class.standard-suite.applescript
+        (match
+            (regex [\b(colors?|documents?|items?|windows?)\b])))
+    (zone support.function.standard-suite.applescript
+        (match
+            (list close count delete duplicate exists make move open print quit save activate select [data size])
+            (boundary.both)))
+    (zone support.constant.standard-suite.applescript
+        (match
+            (list name frontmost version)
+            (boundary.both)))
+    (zone support.variable.standard-suite.applescript
+        (match
+            (list selection)
+            (boundary.both)))
+    (zone support.class.text-suite.applescript
+        (match
+            (regex [\b(attachments?|attribute runs?|characters?|paragraphs?|texts?|words?)\b]))))
+
+(collection inline
+    (include @comments)
+    (include @data-structures)
+    (include @built-in)
+    (include @standardadditions))
+
+(collection attributes.considering-ignoring
+    (zone punctuation.separator.array.attributes.applescript
+        (match ,))
+    (zone keyword.control.attributes.and.applescript
+        (match
+            (list and)
+            (boundary.both)))
+    (zone constant.other.attributes.text.applescript
+        (match
+            (regex [\b(?i:case|diacriticals|hyphens|numeric\s+strings|punctuation|white\s+space)\b])))
+    (zone constant.other.attributes.application.applescript
+        (match
+            (regex [\b(?i:application\s+responses)\b]))))
+
+(collection blocks.other
+    (zone meta.block.considering.applescript
+        (start
+            (regex [^\s*(considering)\b]))
+        (end
+            (regex [^\s*(end(?:\s+considering)?)(?=\s*(--.*?)?$)]))
+        (subzones
+            (zone meta.array.attributes.considering.applescript
+                (start
+                    (regex [(?<=considering)]))
+                (end
+                    (regex [(?<!¬)$]))
+                (subzones
+                    (include @attributes.considering-ignoring)))
+            (zone meta.array.attributes.ignoring.applescript
+                (start
+                    (regex [(?<=ignoring)]))
+                (end
+                    (regex [(?<!¬)$]))
+                (subzones
+                    (include @attributes.considering-ignoring)))
+            (zone keyword.control.but.applescript
+                (match
+                    (list but)
+                    (boundary.both)))
+            (include $self)))
+    (zone meta.block.ignoring.applescript
+        (start
+            (regex [^\s*(ignoring)\b]))
+        (end
+            (regex [^\s*(end(?:\s+ignoring)?)(?=\s*(--.*?)?$)]))
+        (subzones
+            (zone meta.array.attributes.considering.applescript
+                (start
+                    (regex [(?<=considering)]))
+                (end
+                    (regex [(?<!¬)$]))
+                (subzones
+                    (include @attributes.considering-ignoring)))
+            (zone meta.array.attributes.ignoring.applescript
+                (start
+                    (regex [(?<=ignoring)]))
+                (end
+                    (regex [(?<!¬)$]))
+                (subzones
+                    (include @attributes.considering-ignoring)))
+            (zone keyword.control.but.applescript
+                (match
+                    (list but)
+                    (boundary.both)))
+            (include $self)))
+    (zone meta.block.if.applescript
+        (start
+            (regex [^\s*(if)\b]
+                (1 keyword.control.if.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+if)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (zone keyword.control.then.applescript
+                (match
+                    (list then)
+                    (boundary.both)))
+            (zone keyword.control.else-if.applescript
+                (match
+                    (regex [\b(else\s+if)\b])))
+            (zone keyword.control.else.applescript
+                (match
+                    (list else)
+                    (boundary.both)))
+            (include $self)))
+    (zone meta.block.try.applescript
+        (start
+            (regex [^\s*(try)\b]
+                (1 keyword.control.try.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+(try|error))?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (zone meta.property.error.applescript
+                (start
+                    (regex [^\s*(on\s+error)\b]
+                        (1 keyword.control.exception.on-error.applescript)))
+                (end
+                    (regex [(?<!¬)$]))
+                (subzones
+                    (zone keyword.control.exception.modifier.applescript
+                        (match
+                            (regex [\b(?i:number|partial|from|to)\b])))
+                    (include @inline)))
+            (include $self)))
+    (zone meta.block.terms.applescript
+        (start
+            (regex [^\s*(using\s+terms\s+from)\b]
+                (1 keyword.control.terms.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+using\s+terms\s+from)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.timeout.applescript
+        (start
+            (regex [^\s*(with\s+timeout(\s+of)?)\b]
+                (1 keyword.control.timeout.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+timeout)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.transaction.applescript
+        (start
+            (regex [^\s*(with\s+transaction(\s+of)?)\b]
+                (1 keyword.control.transaction.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+transaction)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.end.applescript)))
+        (subzones
+            (include $self))))
+
+(collection data-structures
+    (zone meta.array.applescript
+        (start
+            (regex [(\{)]
+                (1 punctuation.section.array.applescript)))
+        (end
+            (regex [(\})]
+                (1 punctuation.section.array.applescript)))
+        (subzones
+            (zone
+                (match
+                    (regex [(\w+|((\|)[^|\n]*(\|)))\s*(:)]
+                        (3 punctuation.definition.identifier.applescript)
+                        (4 punctuation.definition.identifier.applescript)
+                        (5 punctuation.separator.key-value.applescript)
+                        (1 constant.other.key.applescript)
+                        (2 meta.identifier.applescript))))
+            (zone punctuation.separator.key-value.applescript
+                (match :))
+            (zone punctuation.separator.array.applescript
+                (match ,))
+            (include @inline)))
+    (zone string.quoted.double.application-name.applescript
+        (start
+            (regex [(?:(?<=application )|(?<=app ))(")]
+                (1 punctuation.definition.string.applescript)))
+        (end
+            (regex [(")]
+                (1 punctuation.definition.string.applescript)))
+        (subzones
+            (zone constant.character.escape.applescript
+                (match
+                    (regex \\.)))))
+    (zone string.quoted.double.applescript
+        (start
+            (regex [(")]
+                (1 punctuation.definition.string.applescript)))
+        (end
+            (regex [(")]
+                (1 punctuation.definition.string.applescript)))
+        (subzones
+            (zone constant.character.escape.applescript
+                (match
+                    (regex \\.)))))
+    (zone meta.identifier.applescript
+        (match
+            (regex [(\|)[^|\n]*(\|)]
+                (1 punctuation.definition.identifier.applescript)
+                (2 punctuation.definition.identifier.applescript))))
+    (zone constant.other.data.utxt.applescript
+        (match
+            (regex [(«)(data) (utxt|utf8)([[:xdigit:]]*)(»)(?:\s+(as)\s+(?i:Unicode\s+text))?]
+                (7 support.class.built-in.applescript)
+                (3 storage.type.utxt.applescript)
+                (4 string.unquoted.data.applescript)
+                (5 punctuation.definition.data.applescript)
+                (1 punctuation.definition.data.applescript)
+                (6 keyword.operator.applescript)
+                (2 support.class.built-in.applescript))))
+    (zone constant.other.data.raw.applescript
+        (start
+            (regex [(«)(\w+)\b(?=\s)]
+                (1 punctuation.definition.data.applescript)
+                (2 support.class.built-in.applescript)))
+        (end
+            (regex [(»)]
+                (1 punctuation.definition.data.applescript))))
+    (zone invalid.illegal.data.applescript
+        (match
+            (regex [(«)[^»]*(»)]
+                (1 punctuation.definition.data.applescript)
+                (2 punctuation.definition.data.applescript)))))
+
+(collection blocks.statement
+    (zone meta.statement.property.applescript
+        (start
+            (regex [\b(prop(?:erty)?)\s+(\w+)\b]
+                (1 keyword.control.def.property.applescript)
+                (2 variable.other.property.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (zone punctuation.separator.key-value.property.applescript
+                (match :))
+            (include @inline)))
+    (zone meta.statement.set.applescript
+        (start
+            (regex [\b(set)\s+(\w+)\s+(to)\b]
+                (3 keyword.control.def.set.applescript)
+                (1 keyword.control.def.set.applescript)
+                (2 variable.other.readwrite.set.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (include @inline)))
+    (zone meta.statement.local.applescript
+        (start
+            (regex [\b(local)\b]
+                (1 keyword.control.def.local.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (zone punctuation.separator.variables.local.applescript
+                (match ,))
+            (zone variable.other.readwrite.local.applescript
+                (match
+                    (regex \b\w+)))
+            (include @inline)))
+    (zone meta.statement.global.applescript
+        (start
+            (regex [\b(global)\b]
+                (1 keyword.control.def.global.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (zone punctuation.separator.variables.global.applescript
+                (match ,))
+            (zone variable.other.readwrite.global.applescript
+                (match
+                    (regex \b\w+)))
+            (include @inline)))
+    (zone meta.statement.error.applescript
+        (start
+            (regex [\b(error)\b]
+                (1 keyword.control.exception.error.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (zone keyword.control.exception.modifier.applescript
+                (match
+                    (list number partial from to)
+                    (boundary.both)))
+            (include @inline)))
+    (zone meta.statement.if-then.applescript
+        (start
+            (regex [\b(if)\b(?=.*\bthen\b(?!\s*(--.*?)?$))]
+                (1 keyword.control.if.applescript)))
+        (end
+            (regex [(?<!¬)$]))
+        (subzones
+            (include @inline))))
+
+(collection blocks
+    (zone meta.block.script.applescript
+        (start
+            (regex [^\s*(script)\s+(\w+)]
+                (1 keyword.control.script.applescript)
+                (2 entity.name.type.script-object.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+script)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.script.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.function.positional.applescript
+        (start
+            (regex [^(?x)
+						\s*(to|on)\s+ 					# "on" or "to"
+						(\w+)							# function name
+						(\()							# opening paren
+							((?:[\s,:\{\}]*(?:\w+)?)*)	# parameters
+						(\))							# closing paren
+					]
+                (3 punctuation.definition.parameters.applescript)
+                (4 variable.parameter.handler.applescript)
+                (5 punctuation.definition.parameters.applescript)
+                (1 keyword.control.function.applescript)
+                (2 entity.name.function.handler.applescript)))
+        (end
+            (regex [^\s*(end)(?:\s+(\2))?(?=\s*(--.*?)?$)]
+                (1 keyword.control.function.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.function.prepositional.applescript
+        (start
+            (regex [^(?x)
+						\s*(to|on)\s+ 					# "on" or "to"
+						(\w+)							# function name
+						(?:\s+
+							(of|in)\s+					# "of" or "in"
+							(\w+)						# direct parameter
+						)?
+						(?=\s+(above|against|apart\s+from|around|aside\s+from|at|below|beneath|beside|between|by|for|from|instead\s+of|into|on|onto|out\s+of|over|thru|under)\b)
+					]
+                (3 keyword.control.function.applescript)
+                (4 variable.parameter.handler.direct.applescript)
+                (1 keyword.control.function.applescript)
+                (2 entity.name.function.handler.applescript)))
+        (end
+            (regex [^\s*(end)(?:\s+(\2))?(?=\s*(--.*?)?$)]
+                (1 keyword.control.function.applescript)))
+        (subzones
+            (zone
+                (match
+                    (regex [\b(?i:above|against|apart\s+from|around|aside\s+from|at|below|beneath|beside|between|by|for|from|instead\s+of|into|on|onto|out\s+of|over|thru|under)\s+(\w+)\b]
+                        (1 keyword.control.preposition.applescript)
+                        (2 variable.parameter.handler.applescript))))
+            (include $self)))
+    (zone meta.function.parameterless.applescript
+        (start
+            (regex [^(?x)
+						\s*(to|on)\s+ 					# "on" or "to"
+						(\w+)							# function name
+						(?=\s*(--.*?)?$)				# nothing else
+					]
+                (1 keyword.control.function.applescript)
+                (2 entity.name.function.handler.applescript)))
+        (end
+            (regex [^\s*(end)(?:\s+(\2))?(?=\s*(--.*?)?$)]
+                (1 keyword.control.function.applescript)))
+        (subzones
+            (include $self)))
+    (include @blocks.tell)
+    (include @blocks.repeat)
+    (include @blocks.statement)
+    (include @blocks.other))
+
+(collection textmate
+    (zone support.class.textmate.applescript
+        (match
+            (list [print settings])
+            (boundary.both)))
+    (zone support.function.textmate.applescript
+        (match
+            (list [get url] insert [reload bundles])
+            (boundary.both))))
+
+(collection comments
+    (zone comment.line.number-sign.applescript
+        (match
+            (regex [^\s*(#!).*$\n?]
+                (1 punctuation.definition.comment.applescript))))
+    (zone comment.line.double-dash.applescript
+        (match
+            (regex [(--).*$\n?]
+                (1 punctuation.definition.comment.applescript))))
+    (zone comment.block.applescript
+        (start
+            (regex [\(\*]
+                (0 punctuation.definition.comment.applescript)))
+        (end
+            (regex [\*\)]
+                (0 punctuation.definition.comment.applescript)))
+        (subzones
+            (include @comments.nested))))
+
+(collection built-in.keyword
+    (zone keyword.operator.arithmetic.applescript
+        (match
+            (regex [(&|\*|\+|-|/|÷|\^)])))
+    (zone keyword.operator.comparison.applescript
+        (match
+            (list = ≠ > < ≥ >= ≤ <=)))
+    (zone keyword.operator.word.applescript
+        (match
+            (regex [(?ix)\b
+						(and|or|div|mod|as|not
+						|(a\s+)?(ref(\s+to)?|reference\s+to)
+						|equal(s|\s+to)|contains?|comes\s+(after|before)|(start|begin|end)s?\s+with
+						)
+					\b])))
+    (zone keyword.operator.word.applescript
+        (match
+            (regex [(?ix)\b
+						(is(n't|\s+not)?(\s+(equal(\s+to)?|(less|greater)\s+than(\s+or\s+equal(\s+to)?)?|in|contained\s+by))?
+						|does(n't|\s+not)\s+(equal|come\s+(before|after)|contain)
+						)
+					\b])))
+    (zone keyword.operator.reference.applescript
+        (match
+            (regex [\b(?i:some|every|whose|where|that|id|index|\d+(st|nd|rd|th)|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|last|front|back|middle|named|beginning|end|from|to|thr(u|ough)|before|(front|back|beginning|end)\s+of|after|behind|in\s+(front|back|beginning|end)\s+of)\b])))
+    (zone keyword.control.loop.applescript
+        (match
+            (regex [\b(?i:continue|return|exit(\s+repeat)?)\b])))
+    (zone keyword.other.applescript
+        (match
+            (regex [\b(?i:about|above|after|against|and|apart\s+from|around|as|aside\s+from|at|back|before|beginning|behind|below|beneath|beside|between|but|by|considering|contain|contains|contains|copy|div|does|eighth|else|end|equal|equals|error|every|false|fifth|first|for|fourth|from|front|get|given|global|if|ignoring|in|instead\s+of|into|is|it|its|last|local|me|middle|mod|my|ninth|not|of|on|onto|or|out\s+of|over|prop|property|put|ref|reference|repeat|returning|script|second|set|seventh|since|sixth|some|tell|tenth|that|the|then|third|through|thru|timeout|times|to|transaction|true|try|until|where|while|whose|with|without)\b]))))
+
+(collection standardadditions
+    (zone support.class.standardadditions.user-interaction.applescript
+        (match
+            (regex [\b((alert|dialog) reply)\b])))
+    (zone support.class.standardadditions.file.applescript
+        (match
+            (list [file information])
+            (boundary.both)))
+    (zone support.class.standardadditions.miscellaneous.applescript
+        (match
+            (regex [\b(POSIX files?|system information|volume settings)\b])))
+    (zone support.class.standardadditions.internet.applescript
+        (match
+            (regex [\b(URLs?|internet address(es)?|web pages?|FTP items?)\b])))
+    (zone support.function.standardadditions.file.applescript
+        (match
+            (regex [\b(info for|list (disks|folder)|mount volume|path to( resource)?)\b])))
+    (zone support.function.standardadditions.user-interaction.applescript
+        (match
+            (regex [\b(beep|choose (application|color|file( name)?|folder|from list|remote application|URL)|delay|display (alert|dialog)|say)\b])))
+    (zone support.function.standardadditions.string.applescript
+        (match
+            (regex [\b(ASCII (character|number)|localized string|offset|summarize)\b])))
+    (zone support.function.standardadditions.clipboard.applescript
+        (match
+            (list [set the clipboard to] [the clipboard] [clipboard info])
+            (boundary.both)))
+    (zone support.function.standardadditions.file-i-o.applescript
+        (match
+            (list [open for access] [close access] read write [get eof] [set eof])
+            (boundary.both)))
+    (zone support.function.standardadditions.scripting.applescript
+        (match
+            (regex [\b((load|store|run) script|scripting components)\b])))
+    (zone support.function.standardadditions.miscellaneous.applescript
+        (match
+            (list [current date] [do shell script] [get volume settings] [random number] round [set volume] [system attribute] [system info] [time to GMT])
+            (boundary.both)))
+    (zone support.function.standardadditions.folder-actions.applescript
+        (match
+            (regex [\b(opening folder|(closing|moving) folder window for|adding folder items to|removing folder items from)\b])))
+    (zone support.function.standardadditions.internet.applescript
+        (match
+            (list [open location] [handle CGI request])
+            (boundary.both))))
+
+(collection blocks.tell
+    (zone meta.block.tell.application.textmate.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\s+"(?i:textmate)")(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @textmate)
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.application.finder.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\s+"(?i:finder)")(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @finder)
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.application.system-events.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\s+"(?i:system events)")(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @system-events)
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.application.itunes.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\s+"(?i:itunes)")(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @itunes)
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.application-process.generic.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\s+process\b)(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.application.generic.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=app(lication)?\b)(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include @standard-suite)
+            (include $self)))
+    (zone meta.block.tell.generic.applescript
+        (start
+            (regex [^\s*(tell)\s+(?!.*\bto(?!\s+tell)\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [^\s*(end(?:\s+tell)?)(?=\s*(--.*?)?$)]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include $self)))
+    (zone meta.block.tell.generic.applescript
+        (start
+            (regex [^\s*(tell)\s+(?=.*\bto\b)]
+                (1 keyword.control.tell.applescript)))
+        (end
+            (regex [(?<!¬)$]
+                (1 keyword.control.tell.applescript)))
+        (subzones
+            (include $self))))
+
+(collection itunes
+    (zone support.class.itunes.applescript
+        (match
+            (regex [\b(artwork|application|encoder|EQ preset|item|source|visual|(EQ |browser )?window|((audio CD|device|shared|URL|file) )?track|playlist window|((audio CD|device|radio tuner|library|folder|user) )?playlist)s?\b])))
+    (zone support.function.itunes.applescript
+        (match
+            (regex [\b(add|back track|convert|fast forward|(next|previous) track|pause|play(pause)?|refresh|resume|rewind|search|stop|update|eject|subscribe|update(Podcast|AllPodcasts)|download)\b])))
+    (zone support.constant.itunes.applescript
+        (match
+            (regex [\b(current (playlist|stream (title|URL)|track)|player state)\b])))
+    (zone support.variable.itunes.applescript
+        (match
+            (regex [\b(current (encoder|EQ preset|visual)|EQ enabled|fixed indexing|full screen|mute|player position|sound volume|visuals enabled|visual size)\b]))))
+
+(collection system-events
+    (zone support.class.system-events.audio-file.applescript
+        (match
+            (regex [\b(audio (data|file))\b])))
+    (zone support.class.system-events.disk-folder-file.applescript
+        (match
+            (regex [\b(alias(es)?|(Classic|local|network|system|user) domain objects?|disk( item)?s?|domains?|file( package)?s?|folders?|items?)\b])))
+    (zone support.function.system-events.disk-folder-file.applescript
+        (match
+            (list delete open move)
+            (boundary.both)))
+    (zone support.class.system-events.folder-actions.applescript
+        (match
+            (regex [\b(folder actions?|scripts?)\b])))
+    (zone support.function.system-events.folder-actions.applescript
+        (match
+            (list [attach action to] [attached scripts] [edit action of] [remove action from])
+            (boundary.both)))
+    (zone support.class.system-events.movie-file.applescript
+        (match
+            (list [movie data] [movie file])
+            (boundary.both)))
+    (zone support.function.system-events.power.applescript
+        (match
+            (list [log out] restart [shut down] sleep)
+            (boundary.both)))
+    (zone support.class.system-events.processes.applescript
+        (match
+            (regex [\b(((application |desk accessory )?process|(check|combo )?box)(es)?|(action|attribute|browser|(busy|progress|relevance) indicator|color well|column|drawer|group|grow area|image|incrementor|list|menu( bar)?( item)?|(menu |pop up |radio )?button|outline|(radio|tab|splitter) group|row|scroll (area|bar)|sheet|slider|splitter|static text|table|text (area|field)|tool bar|UI element|window)s?)\b])))
+    (zone support.function.system-events.processes.applescript
+        (match
+            (list click [key code] keystroke perform select)
+            (boundary.both)))
+    (zone support.class.system-events.property-list.applescript
+        (match
+            (regex [\b(property list (file|item))\b])))
+    (zone support.class.system-events.quicktime-file.applescript
+        (match
+            (regex [\b(annotation|QuickTime (data|file)|track)s?\b])))
+    (zone support.function.system-events.system-events.applescript
+        (match
+            (regex [\b((abort|begin|end) transaction)\b])))
+    (zone support.class.system-events.xml.applescript
+        (match
+            (regex [\b(XML (attribute|data|element|file)s?)\b])))
+    (zone support.class.sytem-events.other.applescript
+        (match
+            (regex [\b(print settings|users?|login items?)\b]))))

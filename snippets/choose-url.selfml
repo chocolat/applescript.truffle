@@ -1,0 +1,9 @@
+(name [Choose URL])
+
+(trigger
+    (tab choose))
+
+(only-in source.applescript)
+
+(snippet [%{1="set the_url to "}choose URL showing %{2="Web"} servers with editable URL
+%{0}])

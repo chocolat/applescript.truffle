@@ -1,0 +1,10 @@
+(name [ignoring … end])
+
+(trigger
+    (tab ign))
+
+(only-in source.applescript)
+
+(snippet [ignoring %{1="application responses"}
+	%{0="-- statements"}
+end ignoring])

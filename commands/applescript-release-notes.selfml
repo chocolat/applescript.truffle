@@ -1,0 +1,19 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [AppleScript Release Notes])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# The AppleScript Release Notes at apple.com
+
+open "http://developer.apple.com/releasenotes/AppleScript/RN-AppleScript/"
+])

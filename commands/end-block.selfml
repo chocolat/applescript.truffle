@@ -1,0 +1,28 @@
+(trigger
+    (key [[alt][cmd].]))
+
+(name [End Block])
+
+(only-in [source.applescript meta.block, source.applescript meta.function])
+
+(input nothing)
+
+(output after-selected)
+
+(save nothing)
+
+(script [#!/usr/bin/env ruby -wKU
+
+def end_what?
+  ENV["TM_SCOPE"].split.reverse_each do |scope|
+    case scope
+    when /^meta\.function\./
+      return 'end'
+    when /^meta\.block\.(\w+)\./
+      return "end #{$1}"
+    end
+  end
+end
+
+puts end_what?
+])

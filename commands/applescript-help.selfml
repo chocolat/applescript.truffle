@@ -1,0 +1,28 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [AppleScript Help])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# Use ps to test for Help Viewer, because if we try
+# to use osascript, then it will open Help Viewer
+# before the test, during script compilation.
+
+if ps -xc|grep -sq 'Help Viewer$'; then
+	osascript -e 'tell application "Help Viewer" to open "file:///"'
+fi
+osascript <<-APPLESCRIPT
+	tell app "Help Viewer"
+	    handle url "file:///Library/Documentation/Help/AppleScript.help/Contents/Resources/English.lproj/AppleScript.html"
+	    activate
+	end tell	
+APPLESCRIPT])

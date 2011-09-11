@@ -1,0 +1,19 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [AppleScript Terminology / Event Codes])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# a list of all built-in terms, their types, and the associated event codes.
+
+open "http://developer.apple.com/releasenotes/AppleScript/ASTerminology_AppleEventCodes/TermsAndCodes.html"
+])

@@ -1,0 +1,19 @@
+(trigger
+    (key [[ctrl]H]))
+
+(name [AppleScript Resources])
+
+(only-in source.applescript)
+
+(input nothing scope)
+
+(output nothing)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+# A list of useful applescript resources at apple.com
+
+open "http://developer.apple.com/applescript/"
+])

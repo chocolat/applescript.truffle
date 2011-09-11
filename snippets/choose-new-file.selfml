@@ -1,0 +1,10 @@
+(name [Choose New File])
+
+(trigger
+    (tab choose))
+
+(only-in source.applescript)
+
+(snippet [%{1="set the_filename to "}choose file name with prompt "%{2="Name this file"}" 
+	default name "%{3="untitled"}" default location %{4="path to home folder"}
+%{0}])

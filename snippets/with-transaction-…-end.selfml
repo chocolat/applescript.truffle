@@ -1,0 +1,10 @@
+(name [with transaction … end])
+
+(trigger
+    (tab transaction))
+
+(only-in source.applescript)
+
+(snippet [with transaction%{1/.+/ /}%{1="session"}
+	%{0="-- statements"}
+end transaction])

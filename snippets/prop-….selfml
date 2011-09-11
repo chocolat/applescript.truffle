@@ -1,0 +1,8 @@
+(name [prop …])
+
+(trigger
+    (tab prop))
+
+(only-in source.applescript)
+
+(snippet [property %{1="prop_name"} : %{0="value"}])

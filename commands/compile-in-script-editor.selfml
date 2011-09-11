@@ -1,0 +1,34 @@
+(trigger
+    (key [[alt][cmd]B]))
+
+(name [Compile in Script Editor])
+
+(only-in source.applescript)
+
+(input selection)
+
+(output tooltip)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+content () {
+	iconv -cs -f utf-8 -t macroman//TRANSLIT | perl -pe 's/["\\]/\\$&/g'
+}
+
+osascript <<-APPLESCRIPT
+	tell application "Script Editor"
+	    activate
+	    set theDocument to make new document
+	    tell theDocument
+	        set contents of selection to "$(content)"
+	        try
+	            check syntax
+	            compile
+	        on error error_message number the error_number
+	            display dialog "Error: " & the error_number & ". " & the error_message buttons {"OK"} default button 1
+	        end try
+	    end tell
+	end tell
+APPLESCRIPT])

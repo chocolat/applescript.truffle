@@ -1,0 +1,10 @@
+(name [considering … end])
+
+(trigger
+    (tab con))
+
+(only-in source.applescript)
+
+(snippet [considering %{1="case"}
+	%{0="-- statements"}
+end considering])

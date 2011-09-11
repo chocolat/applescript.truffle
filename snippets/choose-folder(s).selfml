@@ -1,0 +1,13 @@
+(name [Choose Folder(s)])
+
+(trigger
+    (tab choose))
+
+(only-in source.applescript)
+
+(snippet [%{1="set the_folder to "}choose folder with prompt "%{2="Pick a folder"}"%{3=" 
+	default location path to home folder"}%{4=" 
+	with invisibles"}%{5=" 
+	with multiple selections allowed"}%{6=" 
+	with showing package contents"}
+%{0}])

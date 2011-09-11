@@ -1,0 +1,21 @@
+(trigger
+    (key [[cancel]]))
+
+(name [Continue Line (¬)])
+
+(only-in source.applescript)
+
+(input document)
+
+(output snippet)
+
+(save nothing)
+
+(script [#!/bin/bash
+
+if sed -n "$((TM_LINE_NUMBER-1))p" | grep -sq '¬$'; then
+	echo -ne '¬\n'
+else
+	echo -ne '¬\n\t'
+fi
+])

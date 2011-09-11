@@ -1,0 +1,8 @@
+(name [if … then …])
+
+(trigger
+    (tab iff))
+
+(only-in source.applescript)
+
+(snippet [if %{1="condition"} then %{0="value"}])

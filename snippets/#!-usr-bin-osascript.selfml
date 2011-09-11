@@ -1,0 +1,8 @@
+(name [#!/usr/bin/osascript])
+
+(trigger
+    (tab osa))
+
+(only-in source.applescript)
+
+(snippet [#!/usr/bin/osascript])

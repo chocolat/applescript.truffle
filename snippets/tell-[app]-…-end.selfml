@@ -1,0 +1,10 @@
+(name [tell [app] … end])
+
+(trigger
+    (tab tell))
+
+(only-in source.applescript)
+
+(snippet [tell %{1="application "%{2="Finder"}""}
+	%{0="-- statements"}
+end tell])
