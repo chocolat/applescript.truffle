@@ -5,5 +5,5 @@
 
 (only-in source.applescript)
 
-(snippet [%{1="set the_color to "}choose color default color %{2="{65536, 65536, 65536\"}}
+(snippet [%{1="set the_color to "}choose color default color %{2="{65536, 65536, 65536\\"}}
 %{0}])

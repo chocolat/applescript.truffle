@@ -5,4 +5,4 @@
 
 (only-in source.applescript)
 
-(snippet [property parent : %{1="application "%{2="Finder"}""}])
+(snippet [property parent : %{1="application \"%{2="Finder"}\""}])

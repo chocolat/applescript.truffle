@@ -5,5 +5,5 @@
 
 (only-in source.applescript)
 
-(snippet [set the_choice to choose from list %{1="{"%{2="choices"}"\"}}
+(snippet [set the_choice to choose from list %{1="{\"%{2="choices"}\"\\"}}
 %{0} ])

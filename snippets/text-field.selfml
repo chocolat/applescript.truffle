@@ -5,8 +5,8 @@
 
 (only-in source.applescript)
 
-(snippet [display dialog %{1=""%{2="text"}""} 
-	default answer %{3=""%{4="default answer"}""}%{5/.+/ ¬
+(snippet [display dialog %{1="\"%{2="text"}\""} 
+	default answer %{3="\"%{4="default answer"}\""}%{5/.+/ ¬
 	with icon /}%{5="1"} 
 	buttons {"%{7="Cancel"}", "%{6="OK"}"} 
 	default button "%{6}"

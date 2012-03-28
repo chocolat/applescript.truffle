@@ -5,7 +5,7 @@
 
 (only-in source.applescript)
 
-(snippet [display dialog %{1=""%{2="text"}""}%{3/.+/ ¬
+(snippet [display dialog %{1="\"%{2="text"}\""}%{3/.+/ ¬
 	with icon /}%{3="1"} 
 	buttons {"%{4="OK"}"} 
 	default button 1

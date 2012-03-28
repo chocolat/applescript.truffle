@@ -5,6 +5,6 @@
 
 (only-in source.applescript)
 
-(snippet [using terms from %{1="application "%{2="Finder"}""}
+(snippet [using terms from %{1="application \"%{2="Finder"}\""}
 	%{0="-- statements"}
 end using terms from])
